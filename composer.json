@@ -1,0 +1,40 @@
+{
+  "name": "php-enspired/at_shared_exceptable",
+  "description": "Shared implementation for `at/exceptable` and `at/peekaboo`. This package SHOULD NOT be a direct dependency for other projects.",
+  "type": "internal-library",
+  "homepage": "https://php.enspi.red",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Adrian",
+      "email": "adrian@enspi.red",
+      "homepage": "https://enspi.red"
+    }
+  ],
+  "require": {
+    "php": "^8.3",
+    "psr/log": "^3"
+  },
+  "suggest": {
+    "ext-intl": "support for localization and full ICU message formatting features"
+  },
+  "require-dev": {
+    "phan/phan": "^5.4.3",
+    "phpunit/phpunit": "^10"
+  },
+  "autoload": {
+    "psr-4": {
+      "at\\exceptable\\": "exceptable/src/",
+      "at\\exceptable\\tests\\": "exceptable/tests/",
+      "at\\peekaboo\\": "peekaboo/src/",
+      "at\\peekaboo\\tests\\": "peekaboo/tests/"
+    }
+  },
+  "scripts": {
+    "build:locales": "genrb resources/language/*.txt -d resources/language/",
+    "test:analyze": "vendor/bin/phan",
+    "test:unit" : "vendor/bin/phpunit --testsuite all",
+    "exceptable:test:unit" : "vendor/bin/phpunit --testsuite exceptable",
+    "peekaboo:test:unit" : "vendor/bin/phpunit --testsuite peekaboo"
+  }
+}
