@@ -33,7 +33,8 @@ use at\exceptable\ {
 /**
  * Faults corresponding to the Spl Exception types.
  *
- * @todo phan-suppress PhanInvalidConstantExpression
+ * false positive
+ * @phan-suppress PhanInvalidConstantExpression
  */
 enum SplFault implements Fault {
   use IsFault;

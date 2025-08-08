@@ -10,7 +10,6 @@
  */
 namespace at\peekaboo;
 
-use Throwable;
 use at\exceptable\ {
   EnumeratesFaults,
   Fault

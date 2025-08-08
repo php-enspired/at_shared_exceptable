@@ -11,9 +11,8 @@
 declare(strict_types = 1);
 namespace at\exceptable;
 
-use Override,
-  Throwable;
-use at\exceptable\ThrowableContextType;
+use Override;
+use at\exceptable\_ThrowableContext;
 use at\peekaboo\MessageEnum;
 
 /** Implements faults as enum cases and messages as their backing values. */
@@ -25,6 +24,8 @@ trait EnumeratesFaults {
 
   #[Override]
   public static function from(string $name) : static {
+    // false positive: we check the return type
+    // @phan-suppress-next-line PhanTypeMismatchReturn
     return static::tryFrom($name) ??
       throw (ExceptableFault::UnknownFault)(["name" => $name]);
   }
@@ -32,6 +33,8 @@ trait EnumeratesFaults {
   #[Override]
   public static function tryFrom(string $name) : ? static {
     return (defined($name) && ($fault = constant($name)) instanceof static) ?
+      // false positive: we check the return type
+      // @phan-suppress-next-line PhanTypeMismatchReturn
       $fault :
       null;
   }

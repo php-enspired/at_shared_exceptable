@@ -11,8 +11,7 @@
 declare(strict_types = 1);
 namespace at\peekaboo;
 
-use BackedEnum,
-  Override;
+use BackedEnum;
 use at\exceptable\Handler\Handler;
 use at\peekaboo\ {
   EnumeratesMessages,

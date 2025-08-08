@@ -23,7 +23,7 @@ final class ErrorLogEntry extends LogEntry {
 
   public function __construct( public readonly int $code = 0, ...$logEntryProperties) {
     $this->controlled = (error_reporting() === 0);
-    parent::__construct(...$logEntryProperties);
+    parent::__construct(...($logEntryProperties));
   }
 
   #[Override]

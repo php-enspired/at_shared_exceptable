@@ -11,9 +11,6 @@
 declare(strict_types = 1);
 namespace at\peekaboo;
 
-use BackedEnum,
-  Override,
-  ResourceBundle;
 require_once __DIR__ . "/../stubs/intl.php";
 
 use at\exceptable\Handler\Handler;

@@ -12,10 +12,11 @@ declare(strict_types = 1);
 namespace at\exceptable;
 
 use Throwable;
-use at\peekaboo\HasMessages;
 
 /** Defines fault cases for specific error conditions. */
 interface Fault {
+
+  /** @property-read string $name */
 
   /** @see Fault::toExceptable - these methods MUST behave identically. */
   public function __invoke(array $context = [], ? Throwable $previous = null) : Exceptable;

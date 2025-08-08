@@ -12,7 +12,6 @@ declare(strict_types = 1);
 
 namespace at\exceptable\Handler;
 
-use ValueError;
 use at\exceptable\ {
   EnumeratesFaults,
   Fault,

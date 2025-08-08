@@ -14,15 +14,13 @@ namespace at\exceptable\Debug;
 
 use IteratorAggregate,
   Override,
-  Throwable,
   Traversable;
 use at\exceptable\ {
   Debug\LogEntry,
   Debug\DebugLogEntry,
   Debug\ErrorLogEntry,
   Debug\FaultLogEntry,
-  Debug\ThrowableLogEntry,
-  Fault
+  Debug\ThrowableLogEntry
 };
 use Psr\Log\ {
   LoggerInterface as Logger,
@@ -31,11 +29,9 @@ use Psr\Log\ {
 
 class DebugLog implements IteratorAggregate {
 
-  public bool $debug = false;
+  public function __construct( public bool $debug, public ? Logger $logger ) {}
 
-  public array $log = [];
-
-  public ? Logger $logger = null;
+  private array $log = [];
 
   /** Adds a log entry, also logging it if a logger is configured. */
   public function add(LogEntry $entry) : void {

@@ -69,7 +69,7 @@ abstract class LogEntry {
       file: $error["file"] ?? $context["__file__"] ?? null,
       line: $error["line"] ?? $context["__line__"] ?? null,
       message: $error["message"] ??
-        ExceptableFault::UnknownError->message(["error_get_last" => error_get_last()], $error + $context),
+        ExceptableFault::UnknownError->message(["error_get_last" => error_get_last(), "context" => $error + $context]),
       context: $context,
       handled: $context["__handled__"] ?? false
     );
@@ -121,7 +121,7 @@ abstract class LogEntry {
   public function __construct(
     public readonly ? string $file = null,
     public readonly ? int $line = null,
-    public readonly ? string $message = null,
+    public readonly string $message = "",
     array $context = [],
     public readonly bool $handled = false
   ) {

@@ -115,7 +115,7 @@ class Handler {
       $errorCases[] = null;
     }
     foreach ($errorCases as $errorCase) {
-      $handler->default[($errorCase instanceof Fault) ? $errorCase->name : $errorCase] = $to;
+      $handler->default[($errorCase instanceof Fault) ? $errorCase->name() : $errorCase] = $to;
     }
     return $handler;
   }
@@ -148,7 +148,7 @@ class Handler {
   /**
    * Specifies a callback for processing return values on failure.
    *
-   * @param callable $handler fn (Fault $value) : mixed
+   * @param callable $failure fn (Fault $value) : mixed
    */
   final public function onFailure(callable $failure) : static {
     $handler = clone $this;
@@ -159,7 +159,7 @@ class Handler {
   /**
    * Specifies a callback for processing return values on success.
    *
-   * @param callable $handler fn ($value) : mixed
+   * @param callable $success fn ($value) : mixed
    */
   final public function onSuccess(callable $success) : static {
     $handler = clone $this;
@@ -171,6 +171,8 @@ class Handler {
   final public function options(Options $options) : static {
     $handler = clone $this;
     $handler->options = $options;
+    // intentional
+    // @phan-suppress-next-line PhanTypeSuspiciousNonTraversableForeach
     foreach ($this->options as $option => $value) {
       if (! isset($handler->options->$option)) {
         $handler->options->$option = $value;
@@ -297,11 +299,11 @@ class Handler {
   }
 
   private function defaultIf($result) {
-    if ($result === null && isset($this->default[null])) {
-      return $this->default[null];
+    if ($result === null && isset($this->default[""])) {
+      return $this->default[""];
     }
-    if ($result instanceof Fault && isset($this->default[$result->name])) {
-      return $this->default[$result->name];
+    if ($result instanceof Fault && isset($this->default[$result->name()])) {
+      return $this->default[$result->name()];
     }
     return $result;
   }

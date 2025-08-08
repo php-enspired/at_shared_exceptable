@@ -47,7 +47,7 @@ class MessageRegistry {
    *
    * @param string $format Message formatting string
    * @param array $context Contextual replacements
-   * @param string $locale Target message locale
+   * @param ?string $locale Target message locale
    * @param bool $onlyIf Fail if context does not provide replacements for all formatting tokens?
    * @return string|MessageFault Formatted message on success; MessageFault on error
    */

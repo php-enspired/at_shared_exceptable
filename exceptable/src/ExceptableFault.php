@@ -12,7 +12,6 @@ declare(strict_types = 1);
 
 namespace at\exceptable;
 
-use ValueError;
 use at\exceptable\ {
   EnumeratesFaults,
   Fault,
@@ -26,6 +25,8 @@ enum ExceptableFault : string implements Fault {
   use EnumeratesFaults;
 
   case UnknownFault = "{__rootMessage__}";
+  // false positive: Fault
+  // @phan-suppress-next-line PhanUndeclaredClassReference
   case UnacceptableFault = "Invalid Fault type ''{type}'' (expected implementation of " . Fault::class . ")";
   case UncaughtException = "Uncaught Exception ({__rootType__}): {__rootMessage__}";
   case UnacceptableLogMessage = "Invalid log entry message: {type} ({from})";

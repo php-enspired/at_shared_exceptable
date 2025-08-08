@@ -12,11 +12,8 @@ declare(strict_types = 1);
 namespace at\exceptable;
 
 use Override,
-  ResourceBundle,
-  Throwable,
-  UnitEnum;
+  Throwable;
 use at\exceptable\ {
-  Fault,
   Exceptable,
   Spl\RuntimeException
 };
@@ -47,8 +44,8 @@ trait IsFault {
   public readonly string $name;
 
   #[Override]
-  public function __invoke(array $context = [], ? Throwable $previous = null) : Exceptable {
-    return $this->toExceptable(_ThrowableContext::addThrowableContext($context, previous: $previous), $previous);
+  final public function __invoke(array $context = [], ? Throwable $previous = null) : Exceptable {
+    return $this->toExceptable($context, $previous);
   }
 
   #[Override]
@@ -102,7 +99,6 @@ trait IsFault {
    */
   protected function messageKey() : string {
     return $this->name;
-    //return strtr($this->name(), ["\\" => "_"]);
   }
 
   private function adjustExceptable(Exceptable $x) : Exceptable {

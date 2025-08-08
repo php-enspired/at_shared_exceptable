@@ -33,6 +33,8 @@ enum _ThrowableContext : string {
     if (! isset($context["__root__"])) {
       $exceptable = $context["__exception__"] ?? $context["__previous__"] ?? null;
       if ($exceptable instanceof Exceptable) {
+        // false positive: Exceptable->root
+        // @phan-suppress-next-line PhanUndeclaredProperty
         $context += self::throwableContextFrom($exceptable->root, self::Root);
       }
     }
@@ -40,16 +42,15 @@ enum _ThrowableContext : string {
   }
 
   private static function throwableContextFrom(Throwable $throwable, _ThrowableContext $type) : array {
-    $context = [
+    return [
       "__{$type->value}__" => $throwable,
       "__{$type->value}Message__" => $throwable->getMessage(),
       "__{$type->value}Code__" => $throwable->getCode(),
       "__{$type->value}File__" => $throwable->getFile(),
-      "__{$type->value}Line__" => $throwable->getLine()
+      "__{$type->value}Line__" => $throwable->getLine(),
+        // false positive: Exceptable->fault
+        // @phan-suppress-next-line PhanUndeclaredProperty
+      "__{$type->value}Fault__" => ($throwable instanceof Exceptable) ? $throwable->fault : null
     ];
-    if ($throwable instanceof Exceptable) {
-      $context["__{$type->value}Fault__"] = $throwable->fault;
-    }
-    return $context;
   }
 }

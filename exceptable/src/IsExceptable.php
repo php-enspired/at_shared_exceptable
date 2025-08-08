@@ -51,7 +51,7 @@ trait IsExceptable {
     ] + $context;
     // false positive: we're an Exceptable, and Exceptables extend from Throwable
     // @phan-suppress-next-line PhanTraitParentReference
-    parent::__construct($this->fault->message($this->context, $this->previous), 0, $previous);
+    parent::__construct($this->fault->message($this->context), 0, $previous);
   }
 
   #[Override]

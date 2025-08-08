@@ -15,7 +15,6 @@ namespace at\exceptable\Debug;
 use Override;
 use at\exceptable\ {
   Fault,
-  Exceptable,
   Debug\LogEntry
 };
 

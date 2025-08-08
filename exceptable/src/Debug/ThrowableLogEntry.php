@@ -28,6 +28,8 @@ final class ThrowableLogEntry extends LogEntry {
     public readonly Throwable $exception,
     ...$logEntryProperties
   ) {
+    // false positive: Exceptable->fault is defined
+    // @phan-suppress-next-line PhanUndeclaredProperty
     $this->fault = ($exception instanceof Exceptable) ? $exception->fault : null;
     parent::__construct(...$logEntryProperties);
   }
