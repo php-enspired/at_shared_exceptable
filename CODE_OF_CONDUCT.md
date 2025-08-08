@@ -12,7 +12,7 @@ Examples of behavior that contributes to creating a positive environment include
 * Being friendly, patient, and respectful of differing viewpoints and experiences
 * Welcoming constructive criticism
 * Focusing on what is best for the community
-* Showing empathy towards others
+* Showing empathy and kindness towards others
 * General professionalism
 
 Examples of behavior that are inappropriate and are unacceptable include:
