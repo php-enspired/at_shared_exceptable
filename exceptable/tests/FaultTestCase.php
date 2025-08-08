@@ -111,6 +111,7 @@ abstract class FaultTestCase extends TestCase {
    * @todo This test is not actually hitting the intl bundle as expected
    *
    * @param string $locale The locale to use
+   * @param ResourceBundle $bundle The bundle to use for messages
    * @param Fault $fault The Fault instance to test
    * @param array $context Contextual information for the message
    * @param string $expected The expected message
@@ -118,6 +119,7 @@ abstract class FaultTestCase extends TestCase {
    */
   public function testMessageLocalization(
     string $locale,
+    ResourceBundle $bundle,
     Fault $fault,
     array $context,
     string $expected,
@@ -127,26 +129,27 @@ abstract class FaultTestCase extends TestCase {
       $this->markTestSkipped();
     }
 
-    $bundle = $this->newResourceBundle($locale);
-    MessageRegistry::register($bundle);
+    try {
+      MessageRegistry::register($bundle, $fault::class);
 
-    $faultName = $fault->name();
+      $faultName = $fault->name();
 
-    $this->assertSame(
-      empty($expected) ? $faultName : "{$faultName}: {$expected}",
-      $fault->message($context),
-      "Fault does not return expected localized message with context"
-    );
-
-    if ($isContextRequired) {
       $this->assertSame(
-        $faultName,
-        $fault->message(),
-        "Fault does not return expected localized message without context"
+        empty($expected) ? $faultName : "{$faultName}: {$expected}",
+        $fault->message($context),
+        "Fault does not return expected localized message with context"
       );
-    }
 
-    MessageRegistry::unregister($bundle);
+      if ($isContextRequired) {
+        $this->assertSame(
+          $faultName,
+          $fault->message(),
+          "Fault does not return expected localized message without context"
+        );
+      }
+    } finally {
+      MessageRegistry::unregister($bundle, $fault::class);
+    }
   }
 
   /** @dataProvider newExceptableProvider */
@@ -286,9 +289,5 @@ abstract class FaultTestCase extends TestCase {
       $actual->is($fault),
       "Exceptable->is() does not match expected Fault '{$fault->name()}'"
     );
-  }
-
-  protected function newResourceBundle(string $locale) : ResourceBundle {
-    return new ResourceBundle($locale, __DIR__ . "/../resources/language");
   }
 }

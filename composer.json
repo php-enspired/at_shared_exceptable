@@ -31,7 +31,7 @@
     }
   },
   "scripts": {
-    "build:locales": "genrb resources/language/*.txt -d resources/language/",
+    "test:build-locales": "genrb exceptable/resources/language/*.txt -d exceptable/resources/language/ && genrb peekaboo/resources/language/*.txt -d peekaboo/resources/language",
     "test:analyze": "vendor/bin/phan",
     "test:unit" : "vendor/bin/phpunit --testsuite all",
     "exceptable:test:unit" : "vendor/bin/phpunit --testsuite exceptable",

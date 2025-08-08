@@ -57,7 +57,7 @@ trait MessageMapper {
     assert($this instanceof HasMessages);
     $registry = $this->messageRegistry();
     $handler = new Handler()->ignore(MessageFault::NoSuchMessage);
-    return $handler->try($registry::message(...), $key, $context, $locale, "", $onlyIf) ??
+    return $handler->try($registry::message(...), $key, $context, $locale, $this->messageGroup(), $onlyIf) ??
       $handler->try(
         fn () => (($messages = static::messageBundle()) instanceof MessageBundle) ?
           $registry::messageFrom($messages, $key, $context, $locale, $onlyIf) :
@@ -67,11 +67,19 @@ trait MessageMapper {
   }
 
   /**
-   * Gets the message registry class to use for making messages.
+   * The name messages for this class are registered under.
+   *
+   * Defaults to using the fully qualified classname.
+   * Override this method to specify a group name to use.
+   */
+  protected function messageGroup() : string {
+    return static::class;
+  }
+
+  /**
+   * Gets the fully qualified classname of the message registry to use for making messages.
    *
    * Override this method to substitute a different registry.
-   *
-   * @return string FQCN of the MessageRegistry to use
    */
   protected function messageRegistry() : string {
     return MessageRegistry::class;

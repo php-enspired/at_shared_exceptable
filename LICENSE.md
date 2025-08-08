@@ -1,4 +1,4 @@
-Copyright © 2025 Adrian Testa-Avila
+Copyright © 2015 - 2025 Adrian Testa-Avila
 
 Licensed for use ONLY with authorized `php-enspired` packages.
 

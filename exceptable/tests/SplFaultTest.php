@@ -40,6 +40,7 @@ use at\exceptable\ {
   Spl\UnexpectedValueException,
   tests\FaultTestCase
 };
+use ResourceBundle;
 
 /**
  * Basic tests for the default Fault implementations.
@@ -73,20 +74,21 @@ class SplFaultTest extends FaultTestCase {
 
   public static function localizedMessageProvider() : array {
     $context = ["__rootMessage__" => "hello, world"];
+    $bundle = new ResourceBundle("en_US", __DIR__ . "/../resources/language");
     return [
-      ["en_US", SplFault::BadFunctionCall, $context, "hello, world", true],
-      ["en_US", SplFault::BadMethodCall, $context, "hello, world", true],
-      ["en_US", SplFault::DomainError, $context, "hello, world", true],
-      ["en_US", SplFault::InvalidArgument, $context, "hello, world", true],
-      ["en_US", SplFault::LengthError, $context, "hello, world", true],
-      ["en_US", SplFault::LogicError, $context, "hello, world", true],
-      ["en_US", SplFault::OutOfBounds, $context, "hello, world", true],
-      ["en_US", SplFault::OutOfRange, $context, "hello, world", true],
-      ["en_US", SplFault::Overflow, $context, "hello, world", true],
-      ["en_US", SplFault::RangeError, $context, "hello, world", true],
-      ["en_US", SplFault::RuntimeError, $context, "hello, world", true],
-      ["en_US", SplFault::Underflow, $context, "hello, world", true],
-      ["en_US", SplFault::UnexpectedValue, $context, "hello, world", true]
+      ["en_US", $bundle, SplFault::BadFunctionCall, $context, "localized message: hello, world", true],
+      ["en_US", $bundle, SplFault::BadMethodCall, $context, "localized message: hello, world", true],
+      ["en_US", $bundle, SplFault::DomainError, $context, "localized message: hello, world", true],
+      ["en_US", $bundle, SplFault::InvalidArgument, $context, "localized message: hello, world", true],
+      ["en_US", $bundle, SplFault::LengthError, $context, "localized message: hello, world", true],
+      ["en_US", $bundle, SplFault::LogicError, $context, "localized message: hello, world", true],
+      ["en_US", $bundle, SplFault::OutOfBounds, $context, "localized message: hello, world", true],
+      ["en_US", $bundle, SplFault::OutOfRange, $context, "localized message: hello, world", true],
+      ["en_US", $bundle, SplFault::Overflow, $context, "localized message: hello, world", true],
+      ["en_US", $bundle, SplFault::RangeError, $context, "localized message: hello, world", true],
+      ["en_US", $bundle, SplFault::RuntimeError, $context, "localized message: hello, world", true],
+      ["en_US", $bundle, SplFault::Underflow, $context, "localized message: hello, world", true],
+      ["en_US", $bundle, SplFault::UnexpectedValue, $context, "localized message: hello, world", true]
     ];
   }
 

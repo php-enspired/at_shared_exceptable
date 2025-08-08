@@ -1,23 +1,25 @@
 root {
-  at_exceptable_ExceptableFault {
-    UnknownError { "{__rootMessage__}" }
-    UnacceptableFault { "Invalid Fault type ''{type}'' (expected enum implementing at\\exceptable\\Fault)" }
-    UncaughtException { "Uncaught Exception ({__rootType__}): {__rootMessage__}" }
-    HandlerFailed { "ExceptionHandler ({type}) failed: {__rootMessage__}" }
-  }
-  at_exceptable_Spl_SplFault {
-    BadFunctionCall { "{__rootMessage__}" }
-    BadMethodCall { "{__rootMessage__}" }
-    Domain { "{__rootMessage__}" }
-    InvalidArgument { "{__rootMessage__}" }
-    Length { "{__rootMessage__}" }
-    Logic { "{__rootMessage__}" }
-    OutOfBounds { "{__rootMessage__}" }
-    OutOfRange { "{__rootMessage__}" }
-    Overflow { "{__rootMessage__}" }
-    Range { "{__rootMessage__}" }
-    Runtime { "{__rootMessage__}" }
-    Underflow { "{__rootMessage__}" }
-    UnexpectedValue { "{__rootMessage__}" }
-  }
+
+  // SplFault
+  BadFunctionCall { "localized message: {__rootMessage__}" }
+  BadMethodCall { "localized message: {__rootMessage__}" }
+  DomainError { "localized message: {__rootMessage__}" }
+  InvalidArgument { "localized message: {__rootMessage__}" }
+  LengthError { "localized message: {__rootMessage__}" }
+  LogicError { "localized message: {__rootMessage__}" }
+  OutOfBounds { "localized message: {__rootMessage__}" }
+  OutOfRange { "localized message: {__rootMessage__}" }
+  Overflow { "localized message: {__rootMessage__}" }
+  RangeError { "localized message: {__rootMessage__}" }
+  RuntimeError { "localized message: {__rootMessage__}" }
+  Underflow { "localized message: {__rootMessage__}" }
+  UnexpectedValue { "localized message: {__rootMessage__}" }
+
+  // ExceptableFault
+  UnknownError { "localized message: {__rootMessage__}" }
+  UnacceptableFault { "localized message: Invalid Fault type ''{type}'' (expected enum implementing at\\exceptable\\Fault)" }
+  UncaughtException { "localized message: Uncaught Exception ({__rootType__}): {__rootMessage__}" }
+  HandlerFailed { "localized message: ExceptionHandler ({type}) failed: {__rootMessage__}" }
+  UnknownFault { "localized message: {__rootMessage__}" }
+
 }

@@ -100,7 +100,7 @@ class MakesMessagesTest extends TestCase {
     MessageRegistry::$defaultLocale = "en_US";
 
     if (extension_loaded("intl")) {
-      self::$bundle = new ResourceBundle("root", __DIR__ . "/resources");
+      self::$bundle = new ResourceBundle("root", __DIR__ . "/../resources/language");
     }
   }
 

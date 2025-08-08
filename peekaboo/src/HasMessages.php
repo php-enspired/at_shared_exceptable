@@ -37,7 +37,13 @@ interface HasMessages {
    * @param string $key Message identifier
    * @param array $context Contextual information for message replacements
    * @param ?string $locale The locale to use for formatting
+   * @param bool $onlyIf Fail if context does not provide replacements for all formatting tokens?
    * @return string Formatted message on success; MessageFault on failure
    */
-  public function makeMessage(string $key, array $context = [], ? string $locale = null) : string | MessageFault;
+  public function makeMessage(
+    string $key,
+    array $context = [],
+    ? string $locale = null,
+    bool $onlyIf = false
+  ) : string | MessageFault;
 }
