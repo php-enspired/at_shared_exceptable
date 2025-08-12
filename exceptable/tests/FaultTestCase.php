@@ -49,9 +49,6 @@ abstract class FaultTestCase extends TestCase {
   /** @return array[] @see FaultTestCase::testExceptableType() */
   abstract public static function exceptableTypeProvider() : array;
 
-  /** @return array[] @see FaultTestCase::testMessageLocalization() */
-  abstract public static function localizedMessageProvider() : array;
-
   /** @return array[] @see FaultTestCase::testMessage() */
   abstract public static function messageProvider() : array;
 
@@ -88,10 +85,17 @@ abstract class FaultTestCase extends TestCase {
    *
    * @param Fault $fault The Fault instance to test
    * @param array $context Contextual information for the message
-   * @param string $expected The expected message
-   * @param bool $isContextRequired Does omitting context result in an invalid message?
+   * @param string $expected The expected message (pass an empty array if no context is required)
+   * @param string $locale The locale to use (omit if using `EnumeratesFaults`)
+   * @param ResourceBundle $bundle The bundle to use for messages (omit if using `EnumeratesFaults`)
    */
-  public function testMessage(Fault $fault, array $context, string $expected, bool $isContextRequired) {
+  public function testMessage(
+    Fault $fault,
+    array $context,
+    string $expected,
+    ? string $locale = null,
+    ? ResourceBundle $bundle = null
+  ) {
     $faultName = $fault->name();
 
     $this->assertSame(
@@ -100,33 +104,13 @@ abstract class FaultTestCase extends TestCase {
       "Fault does not return expected message with context"
     );
 
-    if ($isContextRequired) {
-      $this->assertSame($faultName, $fault->message(), "Fault does not return expected message without context");
+    // no bundle means we're done with this test
+    if (! isset($bundle)) {
+      return;
     }
-  }
 
-  /**
-   * @dataProvider localizedMessageProvider
-   *
-   * @todo This test is not actually hitting the intl bundle as expected
-   *
-   * @param string $locale The locale to use
-   * @param ResourceBundle $bundle The bundle to use for messages
-   * @param Fault $fault The Fault instance to test
-   * @param array $context Contextual information for the message
-   * @param string $expected The expected message
-   * @param bool $isContextRequired Does omitting context result in an invalid message?
-   */
-  public function testMessageLocalization(
-    string $locale,
-    ResourceBundle $bundle,
-    Fault $fault,
-    array $context,
-    string $expected,
-    bool $isContextRequired
-  ) {
     if (! extension_loaded("intl")) {
-      $this->markTestSkipped();
+      $this->markTestIncomplete("php:intl extension is not loaded");
     }
 
     try {
@@ -139,14 +123,6 @@ abstract class FaultTestCase extends TestCase {
         $fault->message($context),
         "Fault does not return expected localized message with context"
       );
-
-      if ($isContextRequired) {
-        $this->assertSame(
-          $faultName,
-          $fault->message(),
-          "Fault does not return expected localized message without context"
-        );
-      }
     } finally {
       MessageRegistry::unregister($bundle, $fault::class);
     }

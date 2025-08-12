@@ -12,6 +12,7 @@ declare(strict_types = 1);
 namespace at\exceptable\Handler;
 
 use Closure,
+  Stringable,
   Throwable;
 use at\exceptable\ {
   ExceptableFault,
@@ -137,7 +138,7 @@ class Handler {
    * Passing `null` will log the last triggered error, if any.
    */
   public function logIf(
-    Fault | Throwable | HasMessages | array | string | null $e,
+    Stringable | Fault | HasMessages | array | string | null $e,
     array $context = []
   ) : void {
     if ($this->options->debug || ($this->options->logger && ($e instanceof Fault || $e instanceof Throwable))) {
@@ -259,7 +260,6 @@ class Handler {
    * The process as a whole is wrapped with this Handler's registered error strategies.
    */
   final public function tryPipe($initial, callable ...$functions) : mixed {
-    // @todo
     return $this->try(
       function ($result) use ($functions) {
         foreach ($functions as $function) {

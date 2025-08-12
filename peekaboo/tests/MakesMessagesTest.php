@@ -16,7 +16,7 @@ use ResourceBundle;
 
 use at\peekaboo\ {
   HasMessages,
-  MessageMapper,
+  MapsMessages,
   MessageRegistry
 };
 
@@ -81,7 +81,7 @@ class MakesMessagesTest extends TestCase {
 
   public static function setUpBeforeClass() : void {
     self::$instance = new class() implements HasMessages {
-      use MessageMapper;
+      use MapsMessages;
 
       public const array MESSAGES = [
         "top-level-key" => "hello, world",

@@ -29,7 +29,7 @@ use at\peekaboo\ {
  * - defining a class const `MESSAGES` with a map of formatting strings.
  * - overriding `messageBundle()` with your own implementation.
  */
-trait MessageMapper {
+trait MapsMessages {
 
   /**
    * The ResourceBundle for this class.
@@ -39,13 +39,14 @@ trait MessageMapper {
    *
    * @throws MessageException MessageError::BadMessages when attempting to use `MESSAGES` but it is not an array
    */
-  protected static function messageBundle() : MessageBundle {
+  protected static function messageBundle() : ? MessageBundle {
     if (defined(static::class . "::MESSAGES")) {
       if (! is_array(static::MESSAGES)) {
         throw (MessageFault::BadMessages)(["type" => get_debug_type(static::MESSAGES)]);
       }
       return new MessageBundle(static::MESSAGES);
     }
+    return null;
   }
 
   public function makeMessage(

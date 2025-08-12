@@ -20,20 +20,29 @@ use at\peekaboo\ {
 
 /** Implementation for `EnumeratesMessages`. */
 trait MessageEnum {
-  use MessageMapper {
-    MessageMapper::makeMessage as _makeMessage;
+  use MapsMessages {
+    MapsMessages::makeMessage as _makeMessage;
   }
 
   public function message(array $context = []) : string | MessageFault {
     assert($this instanceof EnumeratesMessages && $this instanceof BackedEnum && is_string($this->value));
-    $locale = defined("static::MESSAGES_LOCALE") ? constant("static::MESSAGES_LOCALE") : EnumeratesMessages::MESSAGES_LOCALE;
+    $locale = defined("static::MESSAGES_LOCALE") ?
+      constant("static::MESSAGES_LOCALE") :
+      EnumeratesMessages::MESSAGES_LOCALE;
     return $this->messageRegistry()::formatMessage($this->value, $context, $locale, true);
   }
 
   /** Calls `MakesMessages->makeMessage()`, falling back on `EnumeratesMessages->message()`. */
-  public function makeMessage(string $key, array $context = [], ? string $locale = null, bool $onlyIf = false) : string | MessageFault {
+  public function makeMessage(
+    string $key,
+    array $context = [],
+    ? string $locale = null,
+    bool $onlyIf = false
+  ) : string | MessageFault {
     assert($this instanceof EnumeratesMessages);
-    return new Handler()->ignore(MessageFault::NoSuchMessage)->try($this->_makeMessage(...), $key, $context, $locale, $onlyIf) ??
+    return new Handler()
+      ->ignore(MessageFault::NoSuchMessage)
+      ->try($this->_makeMessage(...), $key, $context, $locale, $onlyIf) ??
       $this->message($context);
   }
 }

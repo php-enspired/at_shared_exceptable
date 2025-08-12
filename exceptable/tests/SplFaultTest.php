@@ -72,42 +72,24 @@ class SplFaultTest extends FaultTestCase {
     ];
   }
 
-  public static function localizedMessageProvider() : array {
-    $context = ["__rootMessage__" => "hello, world"];
-    $bundle = new ResourceBundle("en_US", __DIR__ . "/../resources/language");
-    return [
-      ["en_US", $bundle, SplFault::BadFunctionCall, $context, "localized message: hello, world", true],
-      ["en_US", $bundle, SplFault::BadMethodCall, $context, "localized message: hello, world", true],
-      ["en_US", $bundle, SplFault::DomainError, $context, "localized message: hello, world", true],
-      ["en_US", $bundle, SplFault::InvalidArgument, $context, "localized message: hello, world", true],
-      ["en_US", $bundle, SplFault::LengthError, $context, "localized message: hello, world", true],
-      ["en_US", $bundle, SplFault::LogicError, $context, "localized message: hello, world", true],
-      ["en_US", $bundle, SplFault::OutOfBounds, $context, "localized message: hello, world", true],
-      ["en_US", $bundle, SplFault::OutOfRange, $context, "localized message: hello, world", true],
-      ["en_US", $bundle, SplFault::Overflow, $context, "localized message: hello, world", true],
-      ["en_US", $bundle, SplFault::RangeError, $context, "localized message: hello, world", true],
-      ["en_US", $bundle, SplFault::RuntimeError, $context, "localized message: hello, world", true],
-      ["en_US", $bundle, SplFault::Underflow, $context, "localized message: hello, world", true],
-      ["en_US", $bundle, SplFault::UnexpectedValue, $context, "localized message: hello, world", true]
-    ];
-  }
-
   public static function messageProvider() : array {
+    $locale = "en_US";
     $context = ["__rootMessage__" => "hello, world"];
+    $bundle = new ResourceBundle($locale, __DIR__ . "/../resources/language");
     return [
-      [SplFault::BadFunctionCall, $context, "hello, world", true],
-      [SplFault::BadMethodCall, $context, "hello, world", true],
-      [SplFault::DomainError, $context, "hello, world", true],
-      [SplFault::InvalidArgument, $context, "hello, world", true],
-      [SplFault::LengthError, $context, "hello, world", true],
-      [SplFault::LogicError, $context, "hello, world", true],
-      [SplFault::OutOfBounds, $context, "hello, world", true],
-      [SplFault::OutOfRange, $context, "hello, world", true],
-      [SplFault::Overflow, $context, "hello, world", true],
-      [SplFault::RangeError, $context, "hello, world", true],
-      [SplFault::RuntimeError, $context, "hello, world", true],
-      [SplFault::Underflow, $context, "hello, world", true],
-      [SplFault::UnexpectedValue, $context, "hello, world", true]
+      [SplFault::BadFunctionCall, $context, "hello, world", $locale, $bundle],
+      [SplFault::BadMethodCall, $context, "hello, world", $locale, $bundle],
+      [SplFault::DomainError, $context, "hello, world", $locale, $bundle],
+      [SplFault::InvalidArgument, $context, "hello, world", $locale, $bundle],
+      [SplFault::LengthError, $context, "hello, world", $locale, $bundle],
+      [SplFault::LogicError, $context, "hello, world", $locale, $bundle],
+      [SplFault::OutOfBounds, $context, "hello, world", $locale, $bundle],
+      [SplFault::OutOfRange, $context, "hello, world", $locale, $bundle],
+      [SplFault::Overflow, $context, "hello, world", $locale, $bundle],
+      [SplFault::RangeError, $context, "hello, world", $locale, $bundle],
+      [SplFault::RuntimeError, $context, "hello, world", $locale, $bundle],
+      [SplFault::Underflow, $context, "hello, world", $locale, $bundle],
+      [SplFault::UnexpectedValue, $context, "hello, world", $locale, $bundle]
     ];
   }
 

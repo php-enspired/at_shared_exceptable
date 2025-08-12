@@ -17,7 +17,7 @@ use at\exceptable\ {
   Exceptable,
   Spl\RuntimeException
 };
-use at\peekaboo\MessageMapper;
+use at\peekaboo\MapsMessages;
 
 /**
  * Default implementation for Fault classes.
@@ -38,7 +38,7 @@ use at\peekaboo\MessageMapper;
  *  use `EnumeratesFaults` instead.
  */
 trait IsFault {
-  use MessageMapper;
+  use MapsMessages;
 
   /** @see UnitEnum->name */
   public readonly string $name;
@@ -46,6 +46,11 @@ trait IsFault {
   #[Override]
   final public function __invoke(array $context = [], ? Throwable $previous = null) : Exceptable {
     return $this->toExceptable($context, $previous);
+  }
+
+  #[Override]
+  final public function jsonSerialize() : mixed {
+    return $this->name();
   }
 
   #[Override]

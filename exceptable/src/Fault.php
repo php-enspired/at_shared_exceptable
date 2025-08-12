@@ -11,10 +11,11 @@
 declare(strict_types = 1);
 namespace at\exceptable;
 
-use Throwable;
+use JsonSerializable,
+  Throwable;
 
 /** Defines fault cases for specific error conditions. */
-interface Fault {
+interface Fault extends JsonSerializable {
 
   /** @property-read string $name */
 

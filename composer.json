@@ -22,6 +22,14 @@
     "phan/phan": "^5.4.3",
     "phpunit/phpunit": "^10"
   },
+  "provide": {
+    "php-enspired/exceptable": "6.0",
+    "php-enspired/peekaboo": "2.0"
+  },
+  "conflict": {
+    "php-enspired/exceptable": "<6.0 || >6.0",
+    "php-enspired/peekaboo": "<2.0 || >2.0"
+  },
   "autoload": {
     "psr-4": {
       "at\\exceptable\\": "exceptable/src/",
@@ -31,7 +39,7 @@
     }
   },
   "scripts": {
-    "test:build-locales": "genrb exceptable/resources/language/*.txt -d exceptable/resources/language/ && genrb peekaboo/resources/language/*.txt -d peekaboo/resources/language",
+    "build:messages": "genrb exceptable/resources/language/*.txt -d exceptable/resources/language/ && genrb peekaboo/resources/language/*.txt -d peekaboo/resources/language",
     "test:analyze": "vendor/bin/phan",
     "test:unit" : "vendor/bin/phpunit --testsuite all",
     "exceptable:test:unit" : "vendor/bin/phpunit --testsuite exceptable",

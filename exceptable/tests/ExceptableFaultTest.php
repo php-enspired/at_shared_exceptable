@@ -44,36 +44,28 @@ class ExceptableFaultTest extends FaultTestCase {
     ];
   }
 
-  public static function localizedMessageProvider() : array {
-    return [[]]; // we don't run this test
-  }
-
   public static function messageProvider() : array {
     return [
-      [ExceptableFault::UnknownFault, ["__rootMessage__" => "hello, world"], "hello, world", true],
+      [ExceptableFault::UnknownFault, ["__rootMessage__" => "hello, world"], "hello, world"],
       [
         ExceptableFault::UnacceptableFault,
         ["type" => "Foo"],
-        "Invalid Fault type 'Foo' (expected implementation of at\\exceptable\\Fault)",
-        true
+        "Invalid Fault type 'Foo' (expected implementation of at\\exceptable\\Fault)"
       ],
       [
         ExceptableFault::UncaughtException,
         ["__rootType__" => "FooException", "__rootMessage__" => "hello, world"],
-        "Uncaught Exception (FooException): hello, world",
-        true
+        "Uncaught Exception (FooException): hello, world"
       ],
       [
         ExceptableFault::UnacceptableLogMessage,
         ["type" => "boolean", "from" => true],
-        "Invalid log entry message: boolean (true)",
-        true
+        "Invalid log entry message: boolean (true)"
       ],
       [
         ExceptableFault::UnknownError,
         ["error_get_last" => null],
-        "Unknown error (message is missing). Last error: null",
-        true
+        "Unknown error (message is missing). Last error: null"
       ]
     ];
   }
@@ -116,17 +108,5 @@ class ExceptableFaultTest extends FaultTestCase {
 
   protected static function faultType() : string {
     return ExceptableFault::class;
-  }
-
-  #[Override]
-  public function testMessageLocalization(
-    $locale = null,
-    $bundle = null,
-    $fault = null,
-    $context = null,
-    $expected = null,
-    $isContextRequired = null
-  ) {
-    $this->markTestSkipped("EnumeratesFaults does not use ICU bundles");
   }
 }

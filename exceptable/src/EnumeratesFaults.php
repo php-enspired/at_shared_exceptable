@@ -23,23 +23,6 @@ trait EnumeratesFaults {
   }
 
   #[Override]
-  public static function from(string $name) : static {
-    // false positive: we check the return type
-    // @phan-suppress-next-line PhanTypeMismatchReturn
-    return static::tryFrom($name) ??
-      throw (ExceptableFault::UnknownFault)(["name" => $name]);
-  }
-
-  #[Override]
-  public static function tryFrom(string $name) : ? static {
-    return (defined($name) && ($fault = constant($name)) instanceof static) ?
-      // false positive: we check the return type
-      // @phan-suppress-next-line PhanTypeMismatchReturn
-      $fault :
-      null;
-  }
-
-  #[Override]
   public function message(array $context = []) : string {
     $error = $this->name();
     $message = $this->_message(_ThrowableContext::addThrowableContext($context));
