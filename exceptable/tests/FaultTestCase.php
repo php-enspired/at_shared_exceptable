@@ -96,35 +96,40 @@ abstract class FaultTestCase extends TestCase {
     ? string $locale = null,
     ? ResourceBundle $bundle = null
   ) {
-    $faultName = $fault->name();
-
-    $this->assertSame(
-      "{$faultName}: {$expected}",
-      $fault->message($context),
-      "Fault does not return expected message with context"
-    );
-
-    // no bundle means we're done with this test
-    if (! isset($bundle)) {
-      return;
-    }
-
-    if (! extension_loaded("intl")) {
-      $this->markTestIncomplete("php:intl extension is not loaded");
-    }
-
     try {
-      MessageRegistry::register($bundle, $fault::class);
+      MessageRegistry::$defaultLocale = $locale;
 
       $faultName = $fault->name();
-
       $this->assertSame(
-        empty($expected) ? $faultName : "{$faultName}: {$expected}",
+        "{$faultName}: {$expected}",
         $fault->message($context),
-        "Fault does not return expected localized message with context"
+        "Fault does not return expected message with context"
       );
+
+      // no bundle means we're done with this test
+      if (! isset($bundle)) {
+        return;
+      }
+
+      if (! extension_loaded("intl")) {
+        $this->markTestIncomplete("php:intl extension is not loaded");
+      }
+
+      try {
+        MessageRegistry::register($bundle, $fault::class);
+
+        $faultName = $fault->name();
+
+        $this->assertSame(
+          empty($expected) ? $faultName : "{$faultName}: {$expected}",
+          $fault->message($context),
+          "Fault does not return expected localized message with context"
+        );
+      } finally {
+        MessageRegistry::unregister($bundle, $fault::class);
+      }
     } finally {
-      MessageRegistry::unregister($bundle, $fault::class);
+      MessageRegistry::$defaultLocale = null;
     }
   }
 
