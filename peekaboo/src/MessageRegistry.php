@@ -12,7 +12,8 @@ declare(strict_types = 1);
 namespace at\peekaboo;
 
 use MessageFormatter,
-  ResourceBundle;
+  ResourceBundle,
+  UnitEnum;
 require_once __DIR__ . "/../stubs/intl.php";
 
 use at\peekaboo\MessageFault;
@@ -199,6 +200,9 @@ class MessageRegistry {
   }
 
   private static function toFormattingValue($value) : ? string {
+    if ($value instanceof UnitEnum) {
+      return $value->name;
+    }
     return match (gettype($value)) {
       "string" => $value,
       "integer", "double" => (string) $value,
